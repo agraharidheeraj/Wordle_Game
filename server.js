@@ -26,7 +26,7 @@ async function getRandomWord() {
 function GameStartFromHere() {
     console.log('\nWelcome to Wordle! You have 6 attempts to guess the word.');
     console.log('Letter colors: ');
-    console.log(`- ${chalk.green('Green')} indicates a correct letter.`);
+    console.log(`- ${chalk.green('Green')} indicates a correct letters.`);
     console.log(`- ${chalk.yellow('Yellow')} indicates a correct letter in the wrong position.`);
     console.log(`- ${chalk.blue('Blue')} indicates an incorrect letter.\n`);
   readandwrite.question('Press 1 to start the game: ', async (input) => {
