@@ -37,7 +37,6 @@ function GameStartFromHere() {
     }
 
     const wordToGuess = await getRandomWord();
-    console.log(`${wordToGuess}`);
     startGame(wordToGuess);
   });
 }
@@ -112,6 +111,7 @@ function evaluateGuess(wordToGuess, guess) {
     const isPresent = letterCounts[guessedLetter] > 0;
     letterCounts[guessedLetter]++;
 1
+
     let coloredLetter = guessedLetter;
     if (isCorrect) {
       coloredLetter = chalk.green(guessedLetter);
@@ -120,6 +120,7 @@ function evaluateGuess(wordToGuess, guess) {
     } else {
       coloredLetter = chalk.blue(guessedLetter);
     }
+
     letterCounts[guessedLetter]++;
     result.push({
       index: i,
