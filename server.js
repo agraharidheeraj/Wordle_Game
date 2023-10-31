@@ -101,7 +101,7 @@ function evaluateGuess(wordToGuess, guess) {
   const result = [];
   const letterCounts = {};
 
-  // Count the occurrences of each letter in the word to guess
+  // Count the occurrences of each letter in the word to guesses
   for (const letter of wordToGuess) {
     if (letterCounts[letter]) {
       letterCounts[letter]++;
