@@ -9,14 +9,17 @@ Wordle is a simple word-guessing game implemented in Node.js. The game allows pl
 
 2. **Clone the Repository**: Clone this repository to your local machine.
 
-
-   ```bash
-   node server.js
+ ```bash
+   git clone https://github.com/agraharidheeraj/Wordle_Game.git
    ```
 3. **To Run This Project** : Install dependencies for word coloring
 
    ```bash
    npm install
+   ```
+3. To Run the project in terminal
+  ```bash
+   node server.js
    ```
 
 
