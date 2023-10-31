@@ -102,32 +102,31 @@ function evaluateGuess(wordToGuess, guess) {
   const letterCounts = {};
 
   // Count the occurrences of each letter in the word to guess
-  for (const letter of wordToGuess) {
-    if (letterCounts[letter]) {
-      letterCounts[letter]++;
-    } else {
-      letterCounts[letter] = 1;
-    }
-  }
+
 
   for (let i = 0; i < wordToGuess.length; i++) {
+
     const guessedLetter = guess[i];
     const isCorrect = guessedLetter === wordToGuess[i];
 
-    const isPresent = letterCounts[guessedLetter] > 0;
-    if (isPresent) {
-      letterCounts[guessedLetter]--;
-    }
 
+    if (!letterCounts[guessedLetter]) {
+      letterCounts[guessedLetter] = 0;
+    }
+  
+ 
+    const isPresent = letterCounts[guessedLetter] > 0;
+    letterCounts[guessedLetter]++;
+1
     let coloredLetter = guessedLetter;
     if (isCorrect) {
       coloredLetter = chalk.green(guessedLetter);
-    } else if (isPresent) {
+    } else if (isPresent) {1
       coloredLetter = chalk.yellow(guessedLetter);
     } else {
       coloredLetter = chalk.blue(guessedLetter);
     }
-
+    letterCounts[guessedLetter]++;
     result.push({
       index: i,
       guessedLetter: coloredLetter,
@@ -135,7 +134,7 @@ function evaluateGuess(wordToGuess, guess) {
       isPresent,
     });
   }
-
+ 
   return result;
 }
 
