@@ -37,6 +37,7 @@ function GameStartFromHere() {
     }
 
     const wordToGuess = await getRandomWord();
+    console.log(`${wordToGuess}`);
     startGame(wordToGuess);
   });
 }
@@ -97,37 +98,46 @@ async function getGuessFromUser(attempts) {
 
 // Function to evaluate a guess
 function evaluateGuess(wordToGuess, guess) {
-    const result = [];
-    const presentLetters = new Set();
-  
-    for (let i = 0; i < wordToGuess.length; i++) {
-      const guessedLetter = guess[i];
-      const isCorrect = guessedLetter === wordToGuess[i];
-      const isPresent = wordToGuess.includes(guessedLetter) && !presentLetters.has(guessedLetter);
-  
-      if (isPresent) {
-        presentLetters.add(guessedLetter);
-      }
-  
-      let coloredLetter = guessedLetter;
-      if (isCorrect) {
-        coloredLetter = chalk.green(guessedLetter);
-      } else if (isPresent) {
-        coloredLetter = chalk.yellow(guessedLetter);
-      } else {
-        coloredLetter = chalk.blue(guessedLetter);
-      }
-  
-      result.push({
-        index: i,
-        guessedLetter: coloredLetter,
-        isCorrect,
-        isPresent,
-      });
+  const result = [];
+  const letterCounts = {};
+
+  // Count the occurrences of each letter in the word to guess
+  for (const letter of wordToGuess) {
+    if (letterCounts[letter]) {
+      letterCounts[letter]++;
+    } else {
+      letterCounts[letter] = 1;
     }
-  
-    return result;
   }
+
+  for (let i = 0; i < wordToGuess.length; i++) {
+    const guessedLetter = guess[i];
+    const isCorrect = guessedLetter === wordToGuess[i];
+
+    const isPresent = letterCounts[guessedLetter] > 0;
+    if (isPresent) {
+      letterCounts[guessedLetter]--;
+    }
+
+    let coloredLetter = guessedLetter;
+    if (isCorrect) {
+      coloredLetter = chalk.green(guessedLetter);
+    } else if (isPresent) {
+      coloredLetter = chalk.yellow(guessedLetter);
+    } else {
+      coloredLetter = chalk.blue(guessedLetter);
+    }
+
+    result.push({
+      index: i,
+      guessedLetter: coloredLetter,
+      isCorrect,
+      isPresent,
+    });
+  }
+
+  return result;
+}
 
 // Function to check if a word is in the dictionary
 function wordIsInTxtFile(word) {
