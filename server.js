@@ -101,20 +101,14 @@ function evaluateGuess(wordToGuess, guess) {
   const result = [];
   const letterCounts = {};
 
-  // Count the occurrences of each letter in the word to guess
-
-
   for (let i = 0; i < wordToGuess.length; i++) {
 
     const guessedLetter = guess[i];
     const isCorrect = guessedLetter === wordToGuess[i];
 
-
     if (!letterCounts[guessedLetter]) {
       letterCounts[guessedLetter] = 0;
     }
-  
- 
     const isPresent = letterCounts[guessedLetter] > 0;
     letterCounts[guessedLetter]++;
 1
