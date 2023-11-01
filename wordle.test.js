@@ -1,7 +1,7 @@
 const evaluateGuess = require('./evaluateGuess.js');
 const expect = require('chai').expect;
 
-// Create a function to test guess evaluation
+// Create a function to test guess evaluations
 function testGuessEvaluation(wordToGuess, guess, expectedResults) {
   const result = evaluateGuess(wordToGuess, guess);
 
@@ -18,6 +18,7 @@ describe('Wordle Game', function () {
   it('should evaluate a correct guess correctly', function () {
     const wordToGuess = 'apple';
     const guess = 'apple';
+
     const expectedResults = [
       { index: 0, guessedLetter: 'a', status: 'green' },
       { index: 1, guessedLetter: 'p', status: 'green' },

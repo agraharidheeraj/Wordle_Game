@@ -2,6 +2,7 @@
 function evaluateGuess(wordToGuess, guess) {
     const result = [];
   
+    //main logic to run the game 
     for (let i = 0; i < wordToGuess.length; i++) {
       const guessedLetter = guess[i];
       const isCorrect = guessedLetter === wordToGuess[i];
