@@ -1,35 +1,48 @@
-// Function to evaluate a guess
 function evaluateGuess(wordToGuess, guess) {
   const result = [];
-  const remainingIndices = new Set([...Array(wordToGuess.length).keys()]);
+  const remainingLetters = [...wordToGuess];
 
-  for (let i = 0; i < wordToGuess.length; i++) {
-    const guessedLetter = guess[i];
-    const correctLetter = wordToGuess[i];
-    let status = 'blue';
+  markCorrectLetters(result, guess, remainingLetters);
+  markIncorrectLetters(result, guess, remainingLetters);
 
-    if (guessedLetter === correctLetter) {
-      status = 'green';
-      remainingIndices.delete(i);
-    } else if (wordToGuess.includes(guessedLetter) && remainingIndices.size > 0) {
-      for (const index of remainingIndices) {
-        if (wordToGuess[index] === guessedLetter) {
-          status = 'yellow';
-          remainingIndices.delete(index);
-          break;
-        }
-      }
-    }
-
-    result.push({
-      index: i,
-      guessedLetter,
-      status,
-    });
-  }
+  result.sort((a, b) => a.index - b.index);
 
   return result;
 }
 
-  
-  module.exports = evaluateGuess;
+function markCorrectLetters(result, guess, remainingLetters) {
+  for (let i = 0; i < guess.length; i++) {
+    const guessedLetter = guess[i];
+    const isCorrect = guessedLetter === remainingLetters[i];
+
+    if (isCorrect) {
+      remainingLetters[i] = null;
+      result.push({
+        index: i,
+        guessedLetter,
+        status: "green",
+      });
+    } else {
+      result.push({
+        index: i,
+        guessedLetter,
+        status: "blue",
+      });
+    }
+  }
+}
+
+function markIncorrectLetters(result, guess, remainingLetters) {
+  for (let i = 0; i < guess.length; i++) {
+    if (
+      result[i].status === "blue" &&
+      remainingLetters.includes(guess[i])
+    ) {
+      const correctIndex = remainingLetters.indexOf(guess[i]);
+      remainingLetters[correctIndex] = null;
+      result[i].status = "yellow";
+    }
+  }
+}
+
+module.exports = evaluateGuess;
