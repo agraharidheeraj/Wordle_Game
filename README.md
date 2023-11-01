@@ -23,7 +23,7 @@ Wordle is a simple word-guessing game implemented in Node.js. The game allows pl
    ```
 4.You can also run test cases for the Wordle game to ensure everything is working correctly. Use the following command in your terminal:
 ```bash
-   npm test
+   npm test -- --detectOpenHandles  
    ```
 
 **Acknowledgments**
