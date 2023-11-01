@@ -1,28 +1,35 @@
 // Function to evaluate a guess
 function evaluateGuess(wordToGuess, guess) {
-    const result = [];
-  
-    //main logic to run the game 
-    for (let i = 0; i < wordToGuess.length; i++) {
-      const guessedLetter = guess[i];
-      const isCorrect = guessedLetter === wordToGuess[i];
-      const isPresent = wordToGuess.includes(guessedLetter);
-  
-      let status;
-      if (isCorrect) {
-        status = 'green';
-      } else if (isPresent) {
-        status = 'yellow';
-      } else {
-        status = 'blue';
+  const result = [];
+  const remainingIndices = new Set([...Array(wordToGuess.length).keys()]);
+
+  for (let i = 0; i < wordToGuess.length; i++) {
+    const guessedLetter = guess[i];
+    const correctLetter = wordToGuess[i];
+    let status = 'blue';
+
+    if (guessedLetter === correctLetter) {
+      status = 'green';
+      remainingIndices.delete(i);
+    } else if (wordToGuess.includes(guessedLetter) && remainingIndices.size > 0) {
+      for (const index of remainingIndices) {
+        if (wordToGuess[index] === guessedLetter) {
+          status = 'yellow';
+          remainingIndices.delete(index);
+          break;
+        }
       }
-      result.push({
-        index: i,
-        guessedLetter,
-        status,
-      });
     }
-    return result;
+
+    result.push({
+      index: i,
+      guessedLetter,
+      status,
+    });
   }
+
+  return result;
+}
+
   
   module.exports = evaluateGuess;

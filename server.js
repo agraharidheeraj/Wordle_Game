@@ -39,6 +39,7 @@ function GameStartFromHere() {
     }
 
     const wordToGuess = await getRandomWord();
+    console.log(wordToGuess);
     startGame(wordToGuess);
   });
 }
