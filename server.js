@@ -24,11 +24,12 @@ async function getRandomWord() {
 
 // Function to initialize the game
 function GameStartFromHere() {
-    console.log('\nWelcome to Wordle! You have 6 attempts to guess the word.');
-    console.log('Letter colors: ');
-    console.log(`- ${chalk.green('Green')} indicates a correct letters.`);
-    console.log(`- ${chalk.yellow('Yellow')} indicates a correct letter in the wrong position.`);
-    console.log(`- ${chalk.blue('Blue')} indicates an incorrect letter.\n`);
+  // Welcome message and explanation of letter colors
+  console.log('\nWelcome to Wordle! You have 6 attempts to guess the word.');
+  console.log('Letter colors: ');
+  console.log(`- ${chalk.green('Green')} indicates correct letters.`);
+  console.log(`- ${chalk.yellow('Yellow')} indicates correct letters in the wrong position.`);
+  console.log(`- ${chalk.blue('Blue')} indicates incorrect letters.\n`);
   readandwrite.question('Press 1 to start the game: ', async (input) => {
     if (input !== '1') {
       console.log('Invalid input. Please press 1 to start the game.');
@@ -37,7 +38,6 @@ function GameStartFromHere() {
     }
 
     const wordToGuess = await getRandomWord();
-    console.log(`${wordToGuess}`);
     startGame(wordToGuess);
   });
 }
@@ -54,18 +54,18 @@ async function startGame(wordToGuess) {
     displayResult(result);
 
     if (wordToGuess === guess) {
-      console.log(`Congratulations! You guessed the word: ${wordToGuess}`);
+      console.log(`\nCongratulations! You guessed the right word: ${wordToGuess}\n`);
       readandwrite.close();
       break;
     } else {
       attempts++;
 
       if (attempts >= maxAttempts) {
-        console.log(`Out of attempts. You Lose The Game! The Correct word was: ${wordToGuess}`);
+        console.log(`Out of attempts. You Lose The Game! The correct word was: ${wordToGuess}`);
         readandwrite.close();
         break;
       } else {
-        console.log(`Attempts left: ${maxAttempts - attempts}`);
+        console.log(`\nAttempts left: ${maxAttempts - attempts}`);
       }
     }
   }
@@ -92,47 +92,32 @@ async function getValidGuessFromUser(attempts) {
 // Function to get a guess from the user
 async function getGuessFromUser(attempts) {
   return new Promise((resolve) => {
-    readandwrite.question(`Guess the word (attempt ${attempts + 1}): `, resolve);
+    readandwrite.question(`\nGuess the word (attempt ${attempts + 1}): `, resolve);
   });
 }
 
 // Function to evaluate a guess
 function evaluateGuess(wordToGuess, guess) {
   const result = [];
-  const letterCounts = {};
-
-  // Count the occurrences of each letter in the word to guesses
-  for (const letter of wordToGuess) {
-    if (letterCounts[letter]) {
-      letterCounts[letter]++;
-    } else {
-      letterCounts[letter] = 1;
-    }
-  }
 
   for (let i = 0; i < wordToGuess.length; i++) {
     const guessedLetter = guess[i];
     const isCorrect = guessedLetter === wordToGuess[i];
+    const isPresent = wordToGuess.includes(guessedLetter);
 
-    const isPresent = letterCounts[guessedLetter] > 0;
-    if (isPresent) {
-      letterCounts[guessedLetter]--;
-    }
-
-    let coloredLetter = guessedLetter;
+    let status;
     if (isCorrect) {
-      coloredLetter = chalk.green(guessedLetter);
-    } else if (isPresent) {1
-      coloredLetter = chalk.yellow(guessedLetter);
+      status = 'green';
+    } else if (isPresent) {
+      status = 'yellow';
     } else {
-      coloredLetter = chalk.blue(guessedLetter);
+      status = 'blue';
     }
 
     result.push({
       index: i,
-      guessedLetter: coloredLetter,
-      isCorrect,
-      isPresent,
+      guessedLetter,
+      status,
     });
   }
 
@@ -149,9 +134,27 @@ function wordIsInTxtFile(word) {
 // Function to display the result
 function displayResult(result) {
   result.forEach((letter) => {
-    console.log(`{index: ${chalk.yellow(letter.index)}, guessLetter: '${letter.guessedLetter}', isCorrect: ${chalk.yellow(letter.isCorrect)}, isPresent: ${chalk.yellow(letter.isPresent)}}`);
+    let statusColor;
+    let guessedLetterColor;
+
+    // Assign colors based on status (green, yellow, blue)
+    if (letter.status === 'green') {
+      statusColor = chalk.green(letter.status);
+      guessedLetterColor = chalk.green(letter.guessedLetter);
+    } else if (letter.status === 'yellow') {
+      statusColor = chalk.yellow(letter.status);
+      guessedLetterColor = chalk.yellow(letter.guessedLetter);
+    } else {
+      statusColor = chalk.blue(letter.status);
+      guessedLetterColor = chalk.blue(letter.guessedLetter);
+    }
+    console.log(`{index: ${chalk.yellow(letter.index)}, guessLetter: ${guessedLetterColor}, status: ${statusColor}}`);
   });
 }
 
-// Start the game by calling this function 
+// Start the game by calling this function
 GameStartFromHere();
+
+module.exports = {
+  evaluateGuess,
+};
