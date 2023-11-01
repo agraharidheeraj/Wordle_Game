@@ -1,6 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
 const chalk = require('chalk');
+const evaluateGuess = require('./evaluateGuess.js');
 
 const readandwrite = readline.createInterface({
   input: process.stdin,
@@ -96,33 +97,6 @@ async function getGuessFromUser(attempts) {
   });
 }
 
-// Function to evaluate a guess
-function evaluateGuess(wordToGuess, guess) {
-  const result = [];
-
-  for (let i = 0; i < wordToGuess.length; i++) {
-    const guessedLetter = guess[i];
-    const isCorrect = guessedLetter === wordToGuess[i];
-    const isPresent = wordToGuess.includes(guessedLetter);
-
-    let status;
-    if (isCorrect) {
-      status = 'green';
-    } else if (isPresent) {
-      status = 'yellow';
-    } else {
-      status = 'blue';
-    }
-
-    result.push({
-      index: i,
-      guessedLetter,
-      status,
-    });
-  }
-
-  return result;
-}
 
 // Function to check if a word is in the dictionary
 function wordIsInTxtFile(word) {
@@ -154,7 +128,3 @@ function displayResult(result) {
 
 // Start the game by calling this function
 GameStartFromHere();
-
-module.exports = {
-  evaluateGuess,
-};

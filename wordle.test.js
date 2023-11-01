@@ -1,4 +1,4 @@
-const { evaluateGuess } = require('./server.js');
+const evaluateGuess = require('./evaluateGuess.js');
 const expect = require('chai').expect;
 
 // Create a function to test guess evaluation
