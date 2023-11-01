@@ -26,9 +26,9 @@ Wordle is a simple word-guessing game implemented in Node.js. The game allows pl
    npm test
    ```
 
-Acknowledgments
-This Wordle Game project was developed by me.
-Special thanks to Pramod Sir for assigning this task.
+**Acknowledgments**
+ - This Wordle Game project was developed by me.<br>
+ - Special thanks to Pramod Sir for assigning this task.
 
 
 
