@@ -38,8 +38,8 @@ function markIncorrectLetters(result, guess, remainingLetters) {
       result[i].status === "blue" &&
       remainingLetters.includes(guess[i])
     ) {
-      const correctIndex = remainingLetters.indexOf(guess[i]);
-      remainingLetters[correctIndex] = null;
+      const correctPlace = remainingLetters.indexOf(guess[i]);
+      remainingLetters[correctPlace] = null;
       result[i].status = "yellow";
     }
   }
