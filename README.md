@@ -12,17 +12,23 @@ Wordle is a simple word-guessing game implemented in Node.js. The game allows pl
  ```bash
    git clone https://github.com/agraharidheeraj/Wordle_Game.git
    ```
-3. **To Run This Project** : Install dependencies for word coloring
+3. Install the necessary dependencies for word coloring:
 
    ```bash
    npm install
    ```
-3. To Run the project in terminal
+3. Start the game by running this command in your terminal:
   ```bash
    node server.js
    ```
+4.You can also run test cases for the Wordle game to ensure everything is working correctly. Use the following command in your terminal:
+```bash
+   npm test
+   ```
 
-
+Acknowledgments
+This Wordle Game project was developed by me.
+Special thanks to Pramod Sir for assigning this task.
 
 
 
