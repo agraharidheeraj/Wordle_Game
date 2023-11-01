@@ -126,5 +126,5 @@ function displayResult(result) {
   });
 }
 
-// Start the game by calling this function
+// Start the game by calling this functions
 GameStartFromHere();
